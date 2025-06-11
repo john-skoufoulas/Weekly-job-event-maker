@@ -80,6 +80,3 @@ class myCalendar:
         ).execute()
 
         return events_result.get('items', [])
-
-mc = myCalendar()
-print(mc.check_events_exist())
