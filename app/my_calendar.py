@@ -9,7 +9,6 @@ from utils import *
 import copy
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
-SECRET_PATH = "/etc/secrets"
 SERVICE_ACCOUNT_FILE = '/etc/secrets/service_account_key.json'
 
 
@@ -19,31 +18,10 @@ class myCalendar:
 
 
     def __init__(self):
-
-        # This scope allows full access to calendar
-
         credentials = service_account.Credentials.from_service_account_file(
             SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 
         self.service = build('calendar', 'v3', credentials=credentials)
-
-        # if os.path.exists(SECRET_PATH + '/token.json'):
-        #     self.creds = Credentials.from_authorized_user_file(SECRET_PATH + '/token.json', SCOPES)
-
-        # # If no valid credentials, run the OAuth flow
-        # if not self.creds or not self.creds.valid:
-        #     if self.creds and self.creds.expired and self.creds.refresh_token:
-        #         self.creds.refresh(Request())
-        #     else:
-        #         flow = InstalledAppFlow.from_client_secrets_file(
-        #             SECRET_PATH + '/client_secret.json', SCOPES)
-        #         self.creds = flow.run_local_server(port=0)
-        #         # Save the credentials for the next run
-        #         with open(SECRET_PATH + '/token.json', 'w') as token:
-        #             token.write(self.creds.to_json())
-        
-        # # Connect to Google Calendar API
-        # self.service = build('calendar', 'v3', credentials=self.creds)
 
 
     def create_event(self, event):
@@ -146,14 +124,14 @@ class myCalendar:
     
     def schedule_is_valid(self, schedule_string):
         if type(schedule_string) != str:
-            return({"is_valid":False, "error_message":"Error: Input type must be string. Got"+ str(type(schedule_string))})
+            return({"is_valid":False, "error_message":"Error : Input type must be string. Got"+ str(type(schedule_string))})
         
         user_schedule = schedule_string.split(',')
         
         if len(user_schedule) != 7:
-            return({"is_valid":False, "error_message":"Error: Enter a 7 day schedule."})
+            return({"is_valid":False, "error_message":"Error : Enter a 7 day schedule."})
         for letter in user_schedule:
             if letter not in SHIFTS.keys() or len(letter) != 1:
-                return({"is_valid":False, "error_message":"Error: Invalid shift letters."})
+                return({"is_valid":False, "error_message":"Error : Invalid shift letters."})
         
         return({"is_valid":True, "error_message":""}) 
