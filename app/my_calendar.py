@@ -86,7 +86,7 @@ class myCalendar:
         
         # Check if the events already exist
         if self.check_events_exist(week):
-            return("Scheduled events already exist for this week.")
+            return("Error: Scheduled events already exist for this week.")
 
         week_events = []
 
@@ -124,14 +124,14 @@ class myCalendar:
     
     def schedule_is_valid(self, schedule_string):
         if type(schedule_string) != str:
-            return({"is_valid":False, "error_message":"Error : Input type must be string. Got"+ str(type(schedule_string))})
+            return({"is_valid":False, "error_message":"Error: Input type must be string. Got"+ str(type(schedule_string))})
         
         user_schedule = schedule_string.split(',')
         
         if len(user_schedule) != 7:
-            return({"is_valid":False, "error_message":"Error : Enter a 7 day schedule."})
+            return({"is_valid":False, "error_message":"Error: Enter a 7 day schedule."})
         for letter in user_schedule:
             if letter not in SHIFTS.keys() or len(letter) != 1:
-                return({"is_valid":False, "error_message":"Error : Invalid shift letters."})
+                return({"is_valid":False, "error_message":"Error: Invalid shift letters."})
         
         return({"is_valid":True, "error_message":""}) 
