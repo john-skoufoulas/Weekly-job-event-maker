@@ -3,7 +3,7 @@ import pytz
 
 EVENT_TITLE = "Χτύπα κάρτα Πρόεδρε!"
 
-basic_event = {
+BASIC_EVENT = {
     "summary": EVENT_TITLE,
     "location": "",
     "description": "",
@@ -25,7 +25,7 @@ basic_event = {
     'colorId': '1',  # Red
 }
 
-shifts = {
+SHIFTS = {
     "π": {"start": 5, "end": 14},
     "ε": {"start": 7, "end": 16},
     "α": {"start": 14, "end": 22},
@@ -36,7 +36,7 @@ shifts = {
     "ε3": {"start": 11, "end": 19},
 }
 
-days = {
+DAYS = {
         'monday': 0, 'tuesday': 1, 'wednesday': 2,
         'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6
         }
@@ -53,7 +53,7 @@ def get_next_day(day):
 def get_datetime_for_weekday(day_name, hour, minute, week='this', tz_name='Europe/Athens'):
 
     day_name = day_name.lower()
-    if day_name not in days:
+    if day_name not in DAYS:
         raise ValueError("Invalid day name")
 
     today = datetime.datetime.now()
@@ -66,7 +66,7 @@ def get_datetime_for_weekday(day_name, hour, minute, week='this', tz_name='Europ
     elif week != 'this':
         raise ValueError("Week must be 'this' or 'next'")
 
-    target_weekday = days[day_name]
+    target_weekday = DAYS[day_name]
     target_date = start_of_week + datetime.timedelta(days=target_weekday)
 
     # Create the datetime at 2 AM
