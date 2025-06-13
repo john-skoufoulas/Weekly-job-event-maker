@@ -8,6 +8,7 @@ from utils import *
 import copy
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
+SECRET_PATH = "/etc/secrets"
 
 
 class myCalendar:
@@ -16,8 +17,8 @@ class myCalendar:
 
 
     def __init__(self):
-        if os.path.exists('auth/token.json'):
-            self.creds = Credentials.from_authorized_user_file('auth/token.json', SCOPES)
+        if os.path.exists(SECRET_PATH + '/token.json'):
+            self.creds = Credentials.from_authorized_user_file(SECRET_PATH + '/token.json', SCOPES)
 
         # If no valid credentials, run the OAuth flow
         if not self.creds or not self.creds.valid:
@@ -25,10 +26,10 @@ class myCalendar:
                 self.creds.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'auth/client_secret.json', SCOPES)
+                    SECRET_PATH + '/client_secret.json', SCOPES)
                 self.creds = flow.run_local_server(port=0)
                 # Save the credentials for the next run
-                with open('auth/token.json', 'w') as token:
+                with open(SECRET_PATH + '/token.json', 'w') as token:
                     token.write(self.creds.to_json())
         
         # Connect to Google Calendar API
